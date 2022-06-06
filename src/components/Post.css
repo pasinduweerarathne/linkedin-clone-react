@@ -1,0 +1,19 @@
+.post {
+  background-color: white;
+  padding: 15px;
+  margin-bottom: 10px;
+  border-radius: 10px;
+}
+.post-header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+.post-info {
+  margin-left: 10px;
+}
+
+.post-buttons {
+  display: flex;
+  justify-content: space-evenly;
+}
