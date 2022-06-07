@@ -12,10 +12,14 @@ import firebase from "firebase/compat/app";
 
 import InputOption from "./InputOption";
 import Post from "./Post";
+import { useSelector } from "react-redux";
+import { selectUser } from "../redux/slices/userSlice";
 
 function Feed() {
   const [posts, setPosts] = useState([]);
   const [input, setInput] = useState("");
+
+  const user = useSelector(selectUser);
 
   // getting data from database when the page is loading for the first time
   useEffect(() => {
@@ -35,10 +39,10 @@ function Feed() {
     e.preventDefault();
 
     db.collection("posts").add({
-      name: "Pasindu Weerarathne",
-      description: "this is a test",
+      name: user.displayName,
+      description: user.email,
       message: input,
-      photoUrl: "",
+      photoUrl: user.photoURL || "",
       timestamp: firebase.firestore.FieldValue.serverTimestamp(),
     });
 
@@ -50,7 +54,6 @@ function Feed() {
       {/* share post */}
       <div className="feed-inpurtContainer">
         <div className="feed-input">
-          <Create />
           <form onSubmit={sendPost}>
             <input
               value={input}
@@ -73,13 +76,13 @@ function Feed() {
       </div>
 
       {/* posts */}
-      {posts.map(({ id, data: { name, description, message, photoUrl } }) => (
+      {posts.map(({ id, data: { name, description, message, photoURL } }) => (
         <Post
           key={id}
           name={name}
           description={description}
           message={message}
-          photoUrl={photoUrl}
+          photoUrl={photoURL}
         />
       ))}
     </div>
